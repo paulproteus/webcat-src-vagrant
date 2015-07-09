@@ -18,7 +18,7 @@ fetch()
 	url="$1"
 	file="`basename $url`"
 
-	curl -# -L "$url" -o "$file.tmp" && mv "$file.tmp" "$file"
+	curl -sSL "$url" -o "$file.tmp" && mv "$file.tmp" "$file"
 }
 
 # install WebObjects
