@@ -1,0 +1,12 @@
+language: java
+
+jdk:
+  - openjdk7
+
+sudo: required
+
+install:
+  - ./install.sh
+
+script:
+  - cd web-cat/Web-CAT && ant build.subsystems build.redistributable.war
