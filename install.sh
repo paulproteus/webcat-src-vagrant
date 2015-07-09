@@ -4,13 +4,13 @@ set -e
 
 if [ ! -f /usr/bin/javac ] ; then
     # Need to update or else the installs won't work
-    sudo DEBIAN_FRONTEND=noninteractive apt-get update
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -qq update
 
     # Downgrade tzdata, hilarious.
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install --force-yes -y tzdata/trusty
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -qq install --force-yes -y tzdata/trusty
 
     # Some things we need to build Web-CAT.
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-7-jre openjdk-7-jdk ant git
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -qq install -y openjdk-7-jre openjdk-7-jdk ant git
 fi
 
 fetch()
@@ -25,7 +25,7 @@ fetch()
 [ -f WOInstaller.jar ] || fetch http://wocommunity.org/tools/WOInstaller.jar
 wodir=/Library/WebObjects/Versions/WebObjects543
 sudo mkdir -p $wodir
-[ -d $wodir/Library/Frameworks/JavaXML.framework ] || (sudo java -jar WOInstaller.jar 5.4.3 $wodir || (sudo rm -rf $wodir && exit 1))
+[ -d $wodir/Library/Frameworks/JavaXML.framework ] || (sudo java -jar WOInstaller.jar 5.4.3 $wodir >/dev/null || (sudo rm -rf $wodir && exit 1))
 
 # install Wonder Frameworks
 [ -f Wonder-Frameworks.tar.gz ] || fetch https://jenkins.wocommunity.org/job/Wonder/lastSuccessfulBuild/artifact/Root/Roots/Wonder-Frameworks.tar.gz
