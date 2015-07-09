@@ -63,4 +63,4 @@ if [ ! -d web-cat ] ; then
     git clone https://github.com/mkhon/web-cat web-cat
 fi
 
-#(cd web-cat/Web-CAT && ant install.subsystems.and.build)
+#(cd web-cat/Web-CAT && ant build.subsystems build.redistributable.war)
