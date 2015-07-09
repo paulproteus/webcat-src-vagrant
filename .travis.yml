@@ -1,0 +1,11 @@
+language: java
+sudo: required
+
+jdk:
+  - openjdk7
+
+install:
+  - ./install.sh --quiet
+
+script:
+  - cd web-cat/Web-CAT && ant install.subsystems.and.build
