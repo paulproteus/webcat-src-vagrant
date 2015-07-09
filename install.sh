@@ -1,5 +1,6 @@
 #!/bin/sh
 cd `dirname $0`
+set -e
 
 if [ ! -f /usr/bin/javac ] ; then
     # Need to update or else the installs won't work
@@ -12,18 +13,26 @@ if [ ! -f /usr/bin/javac ] ; then
     sudo DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-7-jre openjdk-7-jdk ant git
 fi
 
+fetch()
+{
+	url="$1"
+	file="`basename $url`"
+
+	curl -# -L "$url" -o "$file.tmp" && mv "$file.tmp" "$file"
+}
+
 # install WebObjects
-[ -f WOInstaller.jar ] || curl -# -O http://wocommunity.org/tools/WOInstaller.jar
+[ -f WOInstaller.jar ] || fetch http://wocommunity.org/tools/WOInstaller.jar
 wodir=/Library/WebObjects/Versions/WebObjects543
 sudo mkdir -p $wodir
-[ -d $wodir/Library/Frameworks/JavaXML.framework ] || sudo java -jar WOInstaller.jar 5.4.3 $wodir
+[ -d $wodir/Library/Frameworks/JavaXML.framework ] || (sudo java -jar WOInstaller.jar 5.4.3 $wodir || (sudo rm -rf $wodir && exit 1))
 
 # install Wonder Frameworks
-[ -f Wonder-Frameworks.tar.gz ] || curl -# -O -L https://jenkins.wocommunity.org/job/Wonder/lastSuccessfulBuild/artifact/Root/Roots/Wonder-Frameworks.tar.gz
+[ -f Wonder-Frameworks.tar.gz ] || fetch https://jenkins.wocommunity.org/job/Wonder/lastSuccessfulBuild/artifact/Root/Roots/Wonder-Frameworks.tar.gz
 sudo tar xfz Wonder-Frameworks.tar.gz -C $wodir/Library/Frameworks
 
 # woproject.jar
-[ -f woproject.jar ] || curl -# -O http://webobjects.mdimension.com/hudson/job/WOLips36Stable/lastSuccessfulBuild/artifact/woproject.jar
+[ -f woproject.jar ] || fetch http://webobjects.mdimension.com/hudson/job/WOLips36Stable/lastSuccessfulBuild/artifact/woproject.jar
 mkdir -p ~/.ant/lib
 cp woproject.jar ~/.ant/lib
 
