@@ -6,10 +6,12 @@ if [ "$1" == "--quiet" ] ; then
     CURL_OPTS="--silent"
     APT_OPTS="-qq"
     APT_FILTER="./apt-filter.sh"
+    WO_INSTALLER_OUTPUT="/dev/null"
 else
     CURL_OPTS="-#"
     APT_OPTS=""
     APT_FILTER="cat"
+    WO_INSTALLER_OUTPUT="/dev/stdout"
 fi
 
 if [ ! -f /usr/bin/javac ] ; then
@@ -35,7 +37,7 @@ fetch()
 [ -f WOInstaller.jar ] || fetch http://wocommunity.org/tools/WOInstaller.jar
 wodir=/Library/WebObjects/Versions/WebObjects543
 sudo mkdir -p $wodir
-[ -d $wodir/Library/Frameworks/JavaXML.framework ] || (sudo java -jar WOInstaller.jar 5.4.3 $wodir || (sudo rm -rf $wodir && exit 1))
+[ -d $wodir/Library/Frameworks/JavaXML.framework ] || (sudo java -jar WOInstaller.jar 5.4.3 $wodir > "$WO_INSTALLER_OUTPUT" || (sudo rm -rf $wodir && exit 1))
 
 # install Wonder Frameworks
 [ -f Wonder-Frameworks.tar.gz ] || fetch https://jenkins.wocommunity.org/job/Wonder/lastSuccessfulBuild/artifact/Root/Roots/Wonder-Frameworks.tar.gz
