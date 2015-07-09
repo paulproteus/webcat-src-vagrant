@@ -1,5 +1,5 @@
 #!/bin/sh
-export HOME=/home/vagrant
+cd `dirname $0`
 
 if [ ! -f /usr/bin/javac ] ; then
     # Need to update or else the installs won't work
@@ -46,7 +46,7 @@ wo.apps.root=$wodir/Local/Library/WebObjects/Applications
 wo.wolocalroot=$wodir
 wo.dir.user.home.library.frameworks=$HOME/Library/Frameworks
 EOF
-sudo chown -R vagrant $wodir/Library/Frameworks ~/Library
+sudo chown -R vagrant $wodir/Library/Frameworks
 
 # If the source isn't checked out, check it out.
 if [ ! -d web-cat ] ; then
