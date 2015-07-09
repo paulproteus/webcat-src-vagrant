@@ -1,16 +1,26 @@
-#!/bin/sh
+#!/bin/bash
 cd `dirname $0`
 set -e
 
+if [ "$1" == "--quiet" ] ; then
+    CURL_OPTS="--silent"
+    APT_OPTS="-qq"
+    APT_FILTER="./apt-filter.sh"
+else
+    CURL_OPTS="-#"
+    APT_OPTS=""
+    APT_FILTER="cat"
+fi
+
 if [ ! -f /usr/bin/javac ] ; then
     # Need to update or else the installs won't work
-    sudo DEBIAN_FRONTEND=noninteractive apt-get update
+    sudo DEBIAN_FRONTEND=noninteractive apt-get update $APT_OPTS 2>&1 | $APT_FILTER
 
     # Downgrade tzdata, hilarious.
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install --force-yes -y tzdata/trusty
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install $APT_OPTS --force-yes -y tzdata/trusty 2>&1 | $APT_FILTER
 
     # Some things we need to build Web-CAT.
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-7-jre openjdk-7-jdk ant git
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install $APT_OPTS -y openjdk-7-jre openjdk-7-jdk ant git 2>&1 | $APT_FILTER
 fi
 
 fetch()
@@ -18,7 +28,7 @@ fetch()
 	url="$1"
 	file="`basename $url`"
 
-	curl -# -L "$url" -o "$file.tmp" && mv "$file.tmp" "$file"
+	curl "$CURL_OPTS" -L "$url" -o "$file.tmp" && mv "$file.tmp" "$file"
 }
 
 # install WebObjects

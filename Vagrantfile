@@ -26,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Use a shell script to "provision" the box. This install Sandstorm using
   # the bundled installer.
   config.vm.provision "shell",
-    inline: "echo localhost > /etc/hostname && hostname localhost && sudo -i -u vagrant /vagrant/install.sh"
+    inline: "echo localhost > /etc/hostname && hostname localhost && sudo -i -u vagrant /vagrant/install.sh --quiet"
 
   # Calculate the number of CPUs and the amount of RAM the system has,
   # in a platform-dependent way; further logic below.
