@@ -9,4 +9,6 @@ install:
   - ./install.sh
 
 script:
+  - which ant
+  - echo $PATH
   - cd web-cat/Web-CAT && ant build.subsystems build.redistributable.war
