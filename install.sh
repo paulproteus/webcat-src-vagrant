@@ -55,7 +55,7 @@ wo.apps.root=$wodir/Local/Library/WebObjects/Applications
 wo.wolocalroot=$wodir
 wo.dir.user.home.library.frameworks=$HOME/Library/Frameworks
 EOF
-sudo chown -R vagrant $wodir/Library/Frameworks
+sudo chown -R "$USER" $wodir/Library/Frameworks
 
 # If the source isn't checked out, check it out.
 if [ ! -d web-cat ] ; then
