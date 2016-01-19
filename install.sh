@@ -77,6 +77,6 @@ if [ "$#" -eq 0 ] || [ ! "$1" = "--install-only" ]; then
     echo #new line
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
-        (cd web-cat/Web-CAT && ant build.subsystems build.redistributable.war)
+        ant -f web-cat/Web-CAT/build.xml build.subsystems build.redistributable.war
     fi
 fi
