@@ -72,4 +72,10 @@ git submodule init
 git submodule update
 echo Done!
 
-#(cd web-cat/Web-CAT && ant build.subsystems build.redistributable.war)
+read -p "Do you want to build Web-CAT? (y/n) " -n 1 -r
+echo #new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    (cd web-cat/Web-CAT && ant build.subsystems build.redistributable.war)
+fi
+
