@@ -10,4 +10,4 @@ install:
   - ./install.sh --install-only 2>&1 >install.log
 
 script:
-  - travis_wait cd web-cat/Web-CAT && ant build.subsystems build.redistributable.war
+  - travis_wait (cd web-cat/Web-CAT && ant build.subsystems build.redistributable.war)
