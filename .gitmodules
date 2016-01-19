@@ -1,0 +1,3 @@
+[submodule "web-cat"]
+	path = web-cat
+	url = https://github.com/mkhon/web-cat
