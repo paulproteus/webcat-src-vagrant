@@ -21,7 +21,7 @@ fetch()
 	url="$1"
 	file="`basename $url`"
 
-	curl -sSL "$url" -o "$file.tmp" && mv "$file.tmp" "$file" || echo Failed to download $file.
+	curl -sSL "$url" -o "$file.tmp" && mv "$file.tmp" "$file" || (echo Failed to download $file. ; exit 1)
 }
 
 # install WebObjects
