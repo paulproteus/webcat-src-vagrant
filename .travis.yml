@@ -7,7 +7,7 @@ jdk:
 sudo: required
 
 install:
-  - ./install.sh 2>&1 > install.log
+  - ./install.sh --install-only 2>&1 >install.log
 
 script:
-  - cd web-cat/Web-CAT && ant build.subsystems build.redistributable.war
+  - travis_wait ant -f web-cat/Web-CAT/build.xml build.subsystems build.redistributable.war
